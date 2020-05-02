@@ -36,7 +36,7 @@ def start_streaming():
 			time.sleep(10)
 			run = True
 		else:
-			print(1)
+			print('streaming Stopping')
 			run = False
 
 def main(argv):

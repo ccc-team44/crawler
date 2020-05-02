@@ -63,6 +63,7 @@ class StreamListener(tweepy.StreamListener):
 	def handle_tweet(self, obj):
 		coordinates = self.get_coords(obj)
 		if coordinates:
+			print(coordinates)
 			if self.is_au(obj):
 				db_data = self.convert(obj)
 				# todo analyzer
@@ -83,7 +84,7 @@ class StreamListener(tweepy.StreamListener):
 				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended").items()
 			except Exception:
 				print("Cursor Issue.. Reconnecting")
-				time.sleep(10)
+				time.sleep(5)
 				run = True
 			else:
 				run = False
@@ -93,17 +94,16 @@ class StreamListener(tweepy.StreamListener):
 			if tweet_json is None:
 				print("This tweet is empty")
 			else:
-				print(type(tweet_json))
-				json_str = json.dumps(tweet_json)
-				self.handle_tweet(json_str)
+				self.handle_tweet(tweet_json)
 	
 	# When a streaming data comes in
 	def on_data(self, raw_data):
+		print(raw_data)
 		json_dict = json.loads(raw_data)
 		self.handle_tweet(json_dict)
 		user_id = json.loads(raw_data)["user"]["id_str"]
 		if self.should_skip_user(user_id):
-			print("skip thi user")
+			print("skip this user", user_id)
 		else:
 			print("start digging user tweet", user_id)
 			self.get_user_tweets(user_id)
