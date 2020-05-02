@@ -7,8 +7,6 @@ import config
 
 
 class StreamListener(tweepy.StreamListener):
-	user_name_list = []
-	database_name = "tweets_db"
 	au_bounds = config.au_bounds;
 	# convert
 	def convert(self, raw):
@@ -20,7 +18,7 @@ class StreamListener(tweepy.StreamListener):
 		screen_name = obj['user']['screen_name']
 		try:
 			text = obj['extended_tweet']['full_text']
-		except KeyError:
+		except Exception:
 			text = obj['full_text'] if 'full_text' in obj else obj['text']
 		
 		db_data = {"_id": id_str, "created_at": created_at, "screen_name": screen_name, "text": text}
@@ -29,25 +27,24 @@ class StreamListener(tweepy.StreamListener):
 	# check tweet has coord
 	def get_coords(self, raw):
 		obj = json.loads(raw)
-		
 		try:
 			coords = obj["geo"]["coordinates"]
-		except KeyError:
+		except Exception:
 			try:
 				coords = ["coordinates"]["coordinates"]
-			except KeyError:
+			except Exception:
 				coords = None
 		return coords
 	
 	# once complete grabbing tweets from an user, mark user as done
 	def should_skip_user(self, user_id):
 		couch = StreamListener.couch
-		db = couch.get_database("users")
+		db = couch.get_database(name="users")
 		
 		try:
 			db.get(user_id)
 		except:
-			db.saveUser({"_id": user_id})
+			self.couch.saveUser({"_id": user_id})
 			return False  # should keep digging
 		else:
 			return True  # should skip this user
@@ -60,12 +57,12 @@ class StreamListener(tweepy.StreamListener):
 			coord = geo["coordinates"]
 			lat = float(coord[0])
 			lng = float(coord[1])
-			return au_bounds[3] >= lat >= au_bounds[1] and au_bounds[2] >= lng >= au_bounds[0]
+			return self.au_bounds[3] >= lat >= self.au_bounds[1] and self.au_bounds[2] >= lng >= self.au_bounds[0]
 		else:
 			coord = obj["coordinates"]["coordinates"]
 			lat = float(coord[0])
 			lng = float(coord[1])
-			return au_bounds[3] >= lng >= au_bounds[1] and au_bounds[2] >= lat >= au_bounds[0]
+			return self.au_bounds[3] >= lng >= self.au_bounds[1] and self.au_bounds[2] >= lat >= self.au_bounds[0]
 	
 	def handle_tweet(self, json_str):
 		
@@ -73,7 +70,7 @@ class StreamListener(tweepy.StreamListener):
 		if coordinates:
 			if self.is_au(json_str):
 				db_data = self.convert(json)
-				
+				print(3)
 				# todo analyzer
 				analysis = {}
 				

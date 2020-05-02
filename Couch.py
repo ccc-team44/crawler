@@ -1,6 +1,6 @@
 import json
 
-import tweepy
+import pycouchdb
 
 
 class Couch():
@@ -9,16 +9,16 @@ class Couch():
 	
 	def get_database(self, name):
 		try:
-			database = self.database(name)
+			database = self.server.database(name)
 			return database
 		except:
 			print("Creating database",  name)
-			self.create(name)
-			return self.database(name)
+			self.server.create(name)
+			return self.server.database(name)
 	
 	# save tweet to database
-	def saveTweet(self, data, db_name):
-		db = self.get_database(self, self.tweet_database_name)
+	def saveTweet(self, data):
+		db = self.get_database(name=self.tweet_database_name)
 		try:
 			db.save(data)
 		except:
@@ -27,8 +27,8 @@ class Couch():
 			print("tweet saved")
 	
 	# save user to database
-	def saveTweet(self, data, db_name):
-		db = self.get_database(self, self.users_database_name)
+	def saveUser(self, data):
+		db = self.get_database(name=self.users_database_name)
 		try:
 			db.save(data)
 		except:
