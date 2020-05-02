@@ -1,0 +1,1 @@
+docker build --tag crawler:1.0 . && docker run -it --rm crawler:1.0
