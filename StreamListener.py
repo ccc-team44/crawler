@@ -9,9 +9,7 @@ import config
 class StreamListener(tweepy.StreamListener):
 	au_bounds = config.au_bounds;
 	# convert
-	def convert(self, raw):
-		
-		obj = json.loads(raw)
+	def convert(self, obj):
 		
 		id_str = obj['id_str']
 		created_at = obj['created_at']
@@ -25,8 +23,7 @@ class StreamListener(tweepy.StreamListener):
 		return db_data
 	
 	# check tweet has coord
-	def get_coords(self, raw):
-		obj = json.loads(raw)
+	def get_coords(self, obj):
 		try:
 			coords = obj["geo"]["coordinates"]
 		except Exception:
@@ -50,8 +47,7 @@ class StreamListener(tweepy.StreamListener):
 			return True  # should skip this user
 	
 	# Method to check if tweet is posted in Australia
-	def is_au(self, raw):
-		obj = json.loads(raw)
+	def is_au(self, obj):
 		if obj["geo"] is not None:
 			geo = obj["geo"]
 			coord = geo["coordinates"]
@@ -64,13 +60,11 @@ class StreamListener(tweepy.StreamListener):
 			lng = float(coord[1])
 			return self.au_bounds[3] >= lng >= self.au_bounds[1] and self.au_bounds[2] >= lat >= self.au_bounds[0]
 	
-	def handle_tweet(self, json_str):
-		
-		coordinates = self.get_coords(json_str)
+	def handle_tweet(self, obj):
+		coordinates = self.get_coords(obj)
 		if coordinates:
-			if self.is_au(json_str):
-				db_data = self.convert(json)
-				print(3)
+			if self.is_au(obj):
+				db_data = self.convert(obj)
 				# todo analyzer
 				analysis = {}
 				
@@ -78,8 +72,8 @@ class StreamListener(tweepy.StreamListener):
 				self.couch.saveTweet(db_data)
 			else:
 				print("not in au")
-		else:
-			print("no coords")
+		# else:
+		# 	print("no coords")
 	
 	# Method used to return user's history tweets through api.user_timeline wrapped in tweepy.Cursor
 	def get_user_tweets(self, user_id):
@@ -99,12 +93,14 @@ class StreamListener(tweepy.StreamListener):
 			if tweet_json is None:
 				print("This tweet is empty")
 			else:
+				print(type(tweet_json))
 				json_str = json.dumps(tweet_json)
 				self.handle_tweet(json_str)
 	
 	# When a streaming data comes in
 	def on_data(self, raw_data):
-		self.handle_tweet(raw_data)
+		json_dict = json.loads(raw_data)
+		self.handle_tweet(json_dict)
 		user_id = json.loads(raw_data)["user"]["id_str"]
 		if self.should_skip_user(user_id):
 			print("skip thi user")
