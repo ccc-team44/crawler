@@ -4,27 +4,37 @@ import tweepy
 
 
 class Couch():
-	database_name = "tweets_db"
-	
+	tweet_database_name = "tweets"
+	users_database_name = "users"
+
 	def get_database(self, name):
 		try:
-			database = self.server.database(self.database_name)
+			database = self.database(name)
 			return database
 		except:
-			print("no such DB remotely..creating DB:" + self.database_name)
-			self.server.create(self.database_name)
-			return self.server.database(self.database_name)
+			print("Creating database",  name)
+			self.create(name)
+			return self.database(name)
 	
-	# save data to database
-	def save(self, data):
-		db = self.get_database(self, self.database_name)
+	# save tweet to database
+	def saveTweet(self, data, db_name):
+		db = self.get_database(self, self.tweet_database_name)
 		try:
 			db.save(data)
 		except:
 			print("exists")
 		else:
-			print("saved")
-	
+			print("tweet saved")
+			
+	# save user to database
+	def saveTweet(self, data, db_name):
+		db = self.get_database(self, self.users_database_name)
+		try:
+			db.save(data)
+		except:
+			print("exists")
+		else:
+			print("user saved")
 	
 	
 	# Method using user_id to check if this user's tweets have already been returned

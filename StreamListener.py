@@ -40,13 +40,12 @@ class StreamListener(tweepy.StreamListener):
 	# once complete grabbing tweets from an user, mark user as done
 	def should_skip_user(self, user_id):
 		couch = StreamListener.couch
-		
 		db = couch.get_database("users")
 		
 		try:
 			db.get(user_id)
 		except:
-			db.save({"_id": user_id})
+			db.saveUser({"_id": user_id})
 			return False  # should keep digging
 		else:
 			return True  # should skip this user
@@ -77,7 +76,7 @@ class StreamListener(tweepy.StreamListener):
 				analysis = {}
 				
 				db_data["coordinates"] = coordinates
-				self.couch.save(db_data)
+				self.couch.saveTweet(db_data)
 			else:
 				print("not in au")
 		else:
