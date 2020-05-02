@@ -1,138 +1,120 @@
 import json
+import time
 
 import tweepy
+
+au_bounds = [110.390625, -44.276671273775165,155.56640625, -11.005904459659451]
 class StreamListener(tweepy.StreamListener):
-	user_name_list=[]
+	user_name_list = []
 	database_name = "tweets_db"
-
-	# Method used to save data to database and handle duplicates
-	def save2db(self, db_data):
+	
+	# convert
+	def convert(self, raw):
+		
+		obj = json.loads(raw)
+		
+		id_str = obj['id_str']
+		created_at = obj['created_at']
+		screen_name = obj['user']['screen_name']
 		try:
-			database = self.server.database(self.database_name)
-		except:
-			print ("no such DB remotely..creating DB:" + self.database_name)
-			database = self.server.create(self.database_name)
-			database = self.server.database(self.database_name)
-		try:
-			database.save(db_data)
-		except:
-			print("Duplicate!!!!","="*50)
-		else:
-			print ("tweet has been saved to DB!!!","!"*50)
-
-	# Method to extract required attributes.
-	def generate_db_data(self,raw_data):
-		if 'extended_tweet' in json.loads(raw_data) :
-			db_data = (str(json.loads(raw_data)['id_str']),str(json.loads(raw_data)['created_at']),str(json.loads(raw_data)['user']['screen_name']),str(json.loads(raw_data)['extended_tweet']['full_text']))
-			print(db_data[3])
-		elif 'full_text' in json.loads(raw_data):
-			db_data = (str(json.loads(raw_data)['id_str']),str(json.loads(raw_data)['created_at']),str(json.loads(raw_data)['user']['screen_name']),str(json.loads(raw_data)['full_text']))
-			print(db_data[3])
-		else :
-			db_data = (str(json.loads(raw_data)['id_str']),str(json.loads(raw_data)['created_at']),str(json.loads(raw_data)['user']['screen_name']),str(json.loads(raw_data)['text']))
-
-		db_data = {"_id":db_data[0],"created_at":db_data[1],"screen_name":db_data[2],"text":db_data[3]}
+			text = obj['extended_tweet']['full_text']
+		except KeyError:
+			text = obj['full_text'] if 'full_text' in obj else obj['text']
+		
+		db_data = {"_id": id_str, "created_at": created_at, "screen_name": screen_name, "text": text}
 		return db_data
-
-	# Method to check if a raw tweet has exact point coordinate
-	def has_coordinates(self,raw_data):
-		data_json = json.loads(raw_data)
-		if data_json["geo"]:
-			return data_json["geo"]["coordinates"]
-		if data_json["coordinates"]:
-			return data_json["coordinates"]["coordinates"]
-		return None
-
-	# Method using user_id to check if this user's tweets have already been returned
-	# through interaction with couchDB. If the user hasn't been returned, then return
-	# True and save user_id in database.
-	def is_user_tweet_already_returned(self,user_id):
-		server = StdOutStreamListener.server
-		print(server)
+	
+	# check tweet has coord
+	def get_coords(self, raw):
+		obj = json.loads(raw)
+		
 		try:
-			database = server.database("userid_db")
-		except:
-			print ("no such DB remotely..creating DB:" + "userid_db")
-			database = server.create("userid_db")
-			database = server.database("userid_db")
-		try:
-			database.get(user_id)
-		except:
-			database.save({"_id":user_id})
-			return False
-		else :
-			return True
-
-	# Method to check if tweet is posted in Australia
-	def is_in_australia(self,tweet):
-		tweet_json = json.loads(tweet)
-		if tweet_json["geo"] is not None:
-			if float(tweet_json["geo"]["coordinates"][0])<=config.locations_australia[3] and float(tweet_json["geo"]["coordinates"][0])>=config.locations_australia[1] and float(tweet_json["geo"]["coordinates"][1])<=config.locations_australia[2] and float(tweet_json["geo"]["coordinates"][1])>=config.locations_australia[0]:
-				return True
-			else:
-				return False
-		else:
-			if float(tweet_json["coordinates"]["coordinates"][1])<=config.locations_australia[3] and float(tweet_json["coordinates"]["coordinates"][1])>=config.locations_australia[1] and float(tweet_json["coordinates"]["coordinates"][0])<=config.locations_australia[2] and float(tweet_json["coordinates"]["coordinates"][0])>=config.locations_australia[0]:
-				return True
-			else:
-				return False
-
-	# Method used to return user's history tweets through api.user_timeline wrapped in tweepy.Cursor
-	def return_user_tweet(self,user_id):
-		isFailed = True
-		while isFailed:
+			coords = obj["geo"]["coordinates"]
+		except KeyError:
 			try:
-				tweets = tweepy.Cursor(StdOutStreamListener.api.user_timeline,user_id = user_id,tweet_mode="extended").items()
+				coords = ["coordinates"]["coordinates"]
+			except KeyError:
+				coords = None
+		return coords
+	
+	# once complete grabbing tweets from an user, mark user as done
+	def should_skip_user(self, user_id):
+		couch = StreamListener.couch
+		
+		db = couch.get_database("users")
+		
+		try:
+			db.get(user_id)
+		except:
+			db.save({"_id": user_id})
+			return False  # should keep digging
+		else:
+			return True  # should skip this user
+	
+	# Method to check if tweet is posted in Australia
+	def is_au(self, raw):
+		obj = json.loads(raw)
+		if obj["geo"] is not None:
+			geo = obj["geo"]
+			coord = geo["coordinates"]
+			lat = float(coord[0])
+			lng = float(coord[1])
+			return au_bounds[3] >= lat >= au_bounds[1] and au_bounds[2] >= lng >= au_bounds[0]
+		else:
+			coord = obj["coordinates"]["coordinates"]
+			lat = float(coord[0])
+			lng = float(coord[1])
+			return au_bounds[3] >= lng >= au_bounds[1] and au_bounds[2] >= lat >= au_bounds[0]
+	
+	def handle_tweet(self, json_str):
+		
+		coordinates = self.get_coords(json_str)
+		if coordinates:
+			if self.is_au(json_str):
+				db_data = self.convert(json)
+				
+				# todo analyzer
+				analysis = {}
+				
+				db_data["coordinates"] = coordinates
+				self.couch.save(db_data)
+			else:
+				print("not in au")
+		else:
+			print("no coords")
+	
+	# Method used to return user's history tweets through api.user_timeline wrapped in tweepy.Cursor
+	def get_user_tweets(self, user_id):
+		run = True
+		while run:
+			try:
+				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id,
+									   tweet_mode="extended").items()
 			except Exception:
-				print ("Cursor Issue.. Reconnecting")
+				print("Cursor Issue.. Reconnecting")
 				time.sleep(10)
-				isFailed = True
-			else :
-				isFailed = False
-
-		for tweet in tweets :
+				run = True
+			else:
+				run = False
+		
+		for tweet in tweets:
 			tweet_json = tweet._json
 			if tweet_json is None:
-				print ("This tweet is empty")
-			else :
-				coordinates = self.has_coordinates(json.dumps(tweet_json))
-				if coordinates:
-					print ("This tweet has point coordinates!!!!")
-					if self.is_in_australia(json.dumps(tweet_json)):
-						print ("This tweet is in Australia!!!!")
-						db_data = self.generate_db_data(json.dumps(tweet_json))
-						analysis_result = analyser.sin_analyse(db_data["text"])
-						db_data["coordinates"] = coordinates
-						if analysis_result:
-							db_data["sin"] = analysis_result["sin"]
-							db_data["sentiment"] = analysis_result["sentiment"]
-							self.save2db(db_data)
-					else:
-						print ("This tweet is not in Australia!!!!")
-						print (tweet_json["geo"])
-						print (tweet_json["coordinates"])
-				else :
-					print ("This tweet has no point coordinates")
-
+				print("This tweet is empty")
+			else:
+				json_str = json.dumps(tweet_json)
+				self.handle_tweet(json_str)
+	
 	# When a streaming data comes in
 	def on_data(self, raw_data):
-		coordinates = self.has_coordinates(raw_data)
-		if coordinates:
-			print ("This tweet has point coordinates!!!!")
-			db_data = self.generate_db_data(raw_data)
-			db_data["coordinates"] = coordinates
-			analysis_result = analyser.sin_analyse(db_data["text"])
-			if analysis_result:
-				db_data["sin"] = analysis_result["sin"]
-				db_data["sentiment"] = analysis_result["sentiment"]
-				self.save2db(db_data)
+		self.handle_tweet(raw_data)
 		user_id = json.loads(raw_data)["user"]["id_str"]
-		if self.is_user_tweet_already_returned(user_id):
-			print ("user's tweets have been returned.")
+		if self.should_skip_user(user_id):
+			print("skip thi user")
 		else:
-			print ("User history tweets harvesting has started...","="*20)
-			self.return_user_tweet(user_id)
-
+			print("start digging user tweet", user_id)
+			self.get_user_tweets(user_id)
+	
 	# Error code
 	def on_error(self, status_code):
 		print(status_code)
