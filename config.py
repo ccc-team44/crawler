@@ -10,7 +10,9 @@ def api_launch(api_id):
     
     auth = tweepy.OAuthHandler(consumer_key[api_id], consumer_secret[api_id])
     auth.set_access_token(access_token[api_id], access_token_secret[api_id])
-
+    
     api = tweepy.API(auth)
-
+    
     return(api)
+
+au_bounds = [110.390625, -44.276671273775165, 155.56640625, -11.005904459659451]

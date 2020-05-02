@@ -2,6 +2,11 @@ import getopt
 import os
 import sys
 
+import pycouchdb as pycouchdb
+from tweepy import Stream
+
+import StreamListener
+import config
 from config import api_launch
 import tweepy
 import time
@@ -146,9 +151,24 @@ def parse_cli(argv):
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-i':
-			node_index = arg
+			node_index = int(arg)
 	return node_index
 
+
+def start_streaming():
+	listener = StreamListener()
+	stream = Stream(listener.auth, listener)
+
+	run = True
+	while run:
+		try:
+			stream.filter(locations=config.au_bounds)
+		except Exception:
+			print ("Some Error Happened.. Reconnecting")
+			time.sleep(10)
+			run = True
+		else :
+			run = False
 
 def main(argv):
 	node_index = parse_cli(argv)
@@ -159,9 +179,18 @@ def main(argv):
 	db_port = os.environ['DATABASE_PORT']
 	
 	server_address = f"http://{db_user}:{db_password}@{db_host}:{db_port}"
-
+	
+	StreamListener.auth = tweepy.OAuthHandler(config.consumer_key[node_index], config.consumer_secret[node_index])
+	StreamListener.auth.set_access_token(config.access_token[node_index], config.access_token_secret[node_index])
+	StreamListener.api = tweepy.API(StreamListener.auth, wait_on_rate_limit=True)
+	
+	try:
+		StreamListener.couch = pycouchdb.Server(server_address, authmethod="basic")
+	except:
+		print("unable connecting to DB")
+		sys.exit(0)
 	# todo
-	streaming()
+	start_streaming()
 
 
 if __name__ == '__main__':

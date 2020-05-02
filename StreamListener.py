@@ -3,11 +3,13 @@ import time
 
 import tweepy
 
-au_bounds = [110.390625, -44.276671273775165,155.56640625, -11.005904459659451]
+import config
+
+
 class StreamListener(tweepy.StreamListener):
 	user_name_list = []
 	database_name = "tweets_db"
-	
+	au_bounds = config.au_bounds;
 	# convert
 	def convert(self, raw):
 		
@@ -87,8 +89,7 @@ class StreamListener(tweepy.StreamListener):
 		run = True
 		while run:
 			try:
-				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id,
-									   tweet_mode="extended").items()
+				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended").items()
 			except Exception:
 				print("Cursor Issue.. Reconnecting")
 				time.sleep(10)
