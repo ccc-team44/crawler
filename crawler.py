@@ -23,6 +23,10 @@ def start_streaming():
 			print("stream RateLimitError error", str(e))
 			time.sleep(15 * 60)
 			run = True
+		except Exception as e:
+			print("non rate related", str(e))
+			time.sleep(15 * 60)
+			run = True
 		else:
 			print('streaming Stopping')
 			run = False
