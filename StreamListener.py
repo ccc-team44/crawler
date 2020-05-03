@@ -62,16 +62,15 @@ class StreamListener(tweepy.StreamListener):
 	def handle_tweet(self, obj):
 		coordinates = self.get_coords(obj)
 		if coordinates:
-			print(coordinates)
 			if self.is_au(obj):
 				db_data = self.convert(obj)
 				# todo analyzer
-				analysis = {}
+				# analysis = {}
 				
 				db_data["coordinates"] = coordinates
 				self.couch.saveTweet(db_data)
-			else:
-				print("not in au")
+			# else:
+			# 	print("not in au")
 		# else:
 		# 	print("no coords")
 	
@@ -96,7 +95,6 @@ class StreamListener(tweepy.StreamListener):
 	
 	# When a streaming data comes in
 	def on_data(self, raw_data):
-		print("-")
 		json_dict = json.loads(raw_data)
 		self.handle_tweet(json_dict)
 		user_id = json.loads(raw_data)["user"]["id_str"]
