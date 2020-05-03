@@ -81,13 +81,12 @@ class StreamListener(tweepy.StreamListener):
 		while run:
 			try:
 				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended").items()
-			except Exception:
-				print("Cursor Issue.. Reconnecting")
-				time.sleep(5)
+			except tweepy.RateLimitError:
+				print("RateLimitError")
+				time.sleep(15* 60)
 				run = True
 			else:
 				run = False
-		
 		for tweet in tweets:
 			tweet_json = tweet._json
 			if tweet_json is None:
@@ -97,7 +96,7 @@ class StreamListener(tweepy.StreamListener):
 	
 	# When a streaming data comes in
 	def on_data(self, raw_data):
-		print(raw_data)
+		print("-")
 		json_dict = json.loads(raw_data)
 		self.handle_tweet(json_dict)
 		user_id = json.loads(raw_data)["user"]["id_str"]

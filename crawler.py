@@ -19,9 +19,9 @@ def start_streaming():
 	while run:
 		try:
 			stream.filter(locations=config.au_bounds)
-		except Exception as e:
-			print("stream error", str(e))
-			time.sleep(10)
+		except tweepy.RateLimitError as e:
+			print("stream RateLimitError error", str(e))
+			time.sleep(15 * 60)
 			run = True
 		else:
 			print('streaming Stopping')
@@ -42,6 +42,7 @@ def main():
 	StreamListener.auth = tweepy.OAuthHandler(config.consumer_key[node_index], config.consumer_secret[node_index])
 	StreamListener.auth.set_access_token(config.access_token[node_index], config.access_token_secret[node_index])
 	StreamListener.api = tweepy.API(StreamListener.auth, wait_on_rate_limit=True)
+	print(StreamListener.api.rate_limit_status())
 	
 	try:
 		couch_server = pycouchdb.Server(server_address, authmethod="basic")
