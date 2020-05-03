@@ -42,8 +42,17 @@ def main():
 	StreamListener.auth = tweepy.OAuthHandler(config.consumer_key[node_index], config.consumer_secret[node_index])
 	StreamListener.auth.set_access_token(config.access_token[node_index], config.access_token_secret[node_index])
 	StreamListener.api = tweepy.API(StreamListener.auth, wait_on_rate_limit=True)
-	print(StreamListener.api.rate_limit_status())
 	
+	keep_trying = True
+	
+	while keep_trying:
+		try:
+			limit = StreamListener.api.rate_limit_status()
+			print(limit)
+			keep_trying = False
+		except Exception as e:
+			print(e)
+			time.sleep(15)
 	try:
 		couch_server = pycouchdb.Server(server_address, authmethod="basic")
 		couch = Couch()
