@@ -25,7 +25,9 @@ class StreamListener(tweepy.StreamListener):
 			coords = obj["geo"]["coordinates"]
 		except Exception:
 			try:
-				coords = ["coordinates"]["coordinates"]
+				coords_raw = obj["coordinates"]["coordinates"]
+				if isinstance(coords_raw, list):
+					coords = coords_raw
 			except Exception:
 				coords = None
 		return coords

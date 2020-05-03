@@ -1,1 +1,1 @@
-docker build --tag crawler:1.0 . && docker run -it --rm crawler:1.0
+docker build --tag crawler:1.0 . && docker run -it -e DATABASE_USER=admin -e DATABASE_PASSWORD=1111 -e DATABASE_PORT=5984 -e DATABASE_HOST=172.26.130.31  --rm crawler:1.0
