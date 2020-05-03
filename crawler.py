@@ -4,7 +4,8 @@ import time
 import couchdb
 import json
 
-
+CRAWL_LOGS = 'crawl_logs'
+CITY_CRAWL_LOG_ID = 'craw_by_city'
 def crawl(num_api,
           places_name,
           host,
@@ -37,7 +38,15 @@ def crawl(num_api,
         for geo in api.geo_search(query=name, granularity="city"):
             places_id.append(geo.id)
             break
-    
+    if CRAWL_LOGS not in couch:
+        couch.create(CRAWL_LOGS)
+    else:
+        try:
+            city_crawl_log = couch.database(CRAWL_LOGS).get(CITY_CRAWL_LOG_ID)
+            log = city_crawl_log
+        except Exception as e:
+            print(e)
+        
     if log == None:
         max_id_list = [None] * num_api
         start_id_list = [None] * num_api
@@ -98,7 +107,7 @@ def crawl(num_api,
                 
                 if hit_bottom_list[api_id]:
                     print("Already hit bottom before, don't need to search tail")
-                
+                    raise tweepy.error.TweepError("Head and Tail both updated")
                 else:
                     # successfully finish searching head and still has limit
                     print("*" * 10, api_id, "keeps running", "*" * 10)
@@ -130,13 +139,21 @@ def crawl(num_api,
             
             # log
             log_info = {}
+            log_info["_id"] = CITY_CRAWL_LOG_ID
             log_info["max_id_list"] = max_id_list
             log_info["start_id_list"] = start_id_list
             log_info["reset_time_list"] = reset_time_list
             log_info["total_tweet_count"] = total_tweet_count
             log_info["hit_bottom_list"] = hit_bottom_list
-            with open("log.json", "w", encoding="utf-8") as k:
-                json.dump(log_info, k)
+            
+            # with open("log.json", "w", encoding="utf-8") as k:
+            #     json.dump(log_info, k)
+
+            try:
+                city_crawl_log = couch.database(CRAWL_LOGS).save(log_info)
+                log = city_crawl_log
+            except Exception as e:
+                print(e)
             
             # switch to next api
             api_id = (api_id + 1) % num_api
@@ -155,3 +172,4 @@ def crawl(num_api,
 
 if __name__ == "__main__":
     crawl(5, ["Melbourne", "Sydney", "Brisbane", "Perth", "Adelaide"], "http://admin:1111@172.26.130.31:5984")
+
