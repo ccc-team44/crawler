@@ -10,13 +10,13 @@ class StreamListener(tweepy.StreamListener):
 	au_bounds = config.au_bounds;
 	# convert
 	def convert(self, obj):
-		
+		id_str = obj['id_str']
 		try:
 			text = obj['extended_tweet']['full_text']
 		except Exception:
 			text = obj['full_text'] if 'full_text' in obj else obj['text']
 		
-		db_data = {**obj, "text": text}
+		db_data = {**obj, "text": text, "_id": id_str}
 		return db_data
 	
 	# check tweet has coord
@@ -91,7 +91,6 @@ class StreamListener(tweepy.StreamListener):
 			if tweet_json is None:
 				print("This tweet is empty")
 			else:
-				print("user tweet found", user_id )
 				self.handle_tweet(tweet_json)
 	
 	# When a streaming data comes in
