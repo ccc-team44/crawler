@@ -11,15 +11,12 @@ class StreamListener(tweepy.StreamListener):
 	# convert
 	def convert(self, obj):
 		
-		id_str = obj['id_str']
-		created_at = obj['created_at']
-		screen_name = obj['user']['screen_name']
 		try:
 			text = obj['extended_tweet']['full_text']
 		except Exception:
 			text = obj['full_text'] if 'full_text' in obj else obj['text']
 		
-		db_data = {"_id": id_str, "created_at": created_at, "screen_name": screen_name, "text": text}
+		db_data = {**obj, "text": text}
 		return db_data
 	
 	# check tweet has coord
@@ -94,6 +91,7 @@ class StreamListener(tweepy.StreamListener):
 			if tweet_json is None:
 				print("This tweet is empty")
 			else:
+				print("user tweet found", user_id )
 				self.handle_tweet(tweet_json)
 	
 	# When a streaming data comes in
