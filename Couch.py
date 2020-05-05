@@ -22,9 +22,10 @@ class Couch():
 		try:
 			db.save(data)
 		except:
-			print("exists")
+			# print("exists")
+			pass
 		else:
-			print("tweet saved")
+			pass
 	
 	# save user to database
 	def saveUser(self, data):
@@ -34,4 +35,5 @@ class Couch():
 		except:
 			print("exists")
 		else:
-			print("user saved")
+			# print("user saved")
+			pass

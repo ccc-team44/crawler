@@ -1,7 +1,7 @@
 import getopt
 import os
 import sys
-
+from multiprocessing import Process, Queue, cpu_count
 import pycouchdb
 from tweepy import Stream
 
@@ -13,6 +13,11 @@ import time
 
 
 def start_streaming():
+	"""
+	If the coordinates field is populated, the values there will be tested against the bounding box. Note that this field uses geoJSON order (longitude, latitude).
+	If coordinates is empty but place is populated, the region defined in place is checked for intersection against the locations bounding box. Any overlap will match.
+	If none of the rules listed above match, the Tweet does not match the location query. Note that the geo field is deprecated, and ignored by the streaming API.
+	"""
 	listener = StreamListener()
 	stream = Stream(listener.auth, listener)
 	run = True
@@ -20,19 +25,17 @@ def start_streaming():
 		try:
 			stream.filter(locations=config.au_bounds)
 		except tweepy.RateLimitError as e:
-			print("stream RateLimitError error", str(e))
+			print("stream RateLimitError error", e)
 			time.sleep(15 * 60)
 			run = True
 		except Exception as e:
-			print("non rate related", str(e))
-			time.sleep(15 * 60)
+			print("non rate related", e)
 			run = True
 		else:
 			print('streaming Stopping')
-			run = False
+			run = True
 
-
-def main():
+def init():
 	db_user = os.environ['DATABASE_USER']
 	db_password = os.environ['DATABASE_PASSWORD']
 	db_host = os.environ['DATABASE_HOST']
@@ -45,7 +48,7 @@ def main():
 	
 	StreamListener.auth = tweepy.OAuthHandler(config.consumer_key[node_index], config.consumer_secret[node_index])
 	StreamListener.auth.set_access_token(config.access_token[node_index], config.access_token_secret[node_index])
-	StreamListener.api = tweepy.API(StreamListener.auth, wait_on_rate_limit=True)
+	StreamListener.api = tweepy.API(StreamListener.auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 	
 	keep_trying = True
 	
@@ -66,6 +69,23 @@ def main():
 		print("unable connecting to DB", e)
 		sys.exit(0)
 	start_streaming()
+
+def main():
+	processes = []
+	
+	# only 2 cores
+	for i in range(2):
+		processes.append(Process(target=init))
+	
+	for i in range(2):
+		processes[i].start()
+		# sleep 5s so they start off with different tweets
+		time.sleep(5)
+	
+	for i in range(2):
+		processes[i].join()
+		
+	print("the end")
 
 
 if __name__ == '__main__':

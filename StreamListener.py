@@ -41,9 +41,11 @@ class StreamListener(tweepy.StreamListener):
 			db.get(user_id)
 		except:
 			self.couch.saveUser({"_id": user_id})
-			return False  # should keep digging
+			# saved and will dig this user
+			return False
 		else:
-			return True  # should skip this user
+			# user in db , skip dig
+			return True
 	
 	# Method to check if tweet is posted in Australia
 	def is_au(self, obj):
@@ -80,10 +82,13 @@ class StreamListener(tweepy.StreamListener):
 		while run:
 			try:
 				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended").items()
-			except tweepy.RateLimitError:
-				print("RateLimitError")
-				time.sleep(15* 60)
+			except tweepy.RateLimitError as e:
+				print("RateLimitError", e)
+				time.sleep( 60 )
 				run = True
+			except Exception as e:
+				print("user timeline general exception", e)
+				run = False
 			else:
 				run = False
 		for tweet in tweets:
@@ -99,7 +104,8 @@ class StreamListener(tweepy.StreamListener):
 		self.handle_tweet(json_dict)
 		user_id = json.loads(raw_data)["user"]["id_str"]
 		if self.should_skip_user(user_id):
-			print("skip this user", user_id)
+			# print("skip this user", user_id)
+			pass
 		else:
 			print("start digging user tweet", user_id)
 			self.get_user_tweets(user_id)
