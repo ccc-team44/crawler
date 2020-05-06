@@ -1,7 +1,5 @@
-import getopt
 import os
 import sys
-from multiprocessing import Process, Queue, cpu_count
 import pycouchdb
 from tweepy import Stream
 
