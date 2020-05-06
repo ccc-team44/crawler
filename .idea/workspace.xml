@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="81d6ae4c-6b5e-46cb-beb9-c9775264f36c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/crawler.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/crawler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crawler.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StreamListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/StreamListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/crawler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,10 +36,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs.protractor.protractor_package" value="" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -63,6 +71,7 @@
       <workItem from="1588726209293" duration="3485000" />
       <workItem from="1588730330363" duration="738000" />
       <workItem from="1588731141066" duration="90000" />
+      <workItem from="1588731335951" duration="8363000" />
     </task>
     <servers />
   </component>
@@ -83,9 +92,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="242" y="101" width="1071" height="711" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588731230716">
-      <screen x="0" y="23" width="1792" height="1041" />
+    <state x="346" y="105" width="1071" height="711" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588731346116">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="346" y="105" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588731346116" />
     <state x="242" y="101" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1041@0.23.1792.1041" timestamp="1588731230716" />
     <state x="242" y="101" width="1071" height="711" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1043@0.23.1792.1043" timestamp="1588672419381" />
     <state x="597" y="354" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588422515001">
@@ -104,24 +114,28 @@
       <screen x="0" y="23" width="1792" height="1043" />
     </state>
     <state x="650" y="333" key="EnvironmentVariablesDialog/0.23.1792.1043@0.23.1792.1043" timestamp="1588427471712" />
-    <state width="1750" height="284" key="GridCell.Tab.0.bottom" timestamp="1588731068415">
-      <screen x="0" y="23" width="1792" height="1041" />
+    <state width="2517" height="400" key="GridCell.Tab.0.bottom" timestamp="1588741486047">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588741486047" />
     <state width="1750" height="284" key="GridCell.Tab.0.bottom/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068415" />
     <state width="1750" height="285" key="GridCell.Tab.0.bottom/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379672" />
-    <state width="1750" height="284" key="GridCell.Tab.0.center" timestamp="1588731068414">
-      <screen x="0" y="23" width="1792" height="1041" />
+    <state width="2517" height="400" key="GridCell.Tab.0.center" timestamp="1588741486047">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588741486047" />
     <state width="1750" height="284" key="GridCell.Tab.0.center/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068414" />
     <state width="1750" height="285" key="GridCell.Tab.0.center/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379672" />
-    <state width="1750" height="284" key="GridCell.Tab.0.left" timestamp="1588731068414">
-      <screen x="0" y="23" width="1792" height="1041" />
+    <state width="2517" height="400" key="GridCell.Tab.0.left" timestamp="1588741486047">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588741486047" />
     <state width="1750" height="284" key="GridCell.Tab.0.left/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068414" />
     <state width="1750" height="285" key="GridCell.Tab.0.left/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379671" />
-    <state width="1750" height="284" key="GridCell.Tab.0.right" timestamp="1588731068415">
-      <screen x="0" y="23" width="1792" height="1041" />
+    <state width="2517" height="400" key="GridCell.Tab.0.right" timestamp="1588741486047">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588741486047" />
     <state width="1750" height="284" key="GridCell.Tab.0.right/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068415" />
     <state width="1750" height="285" key="GridCell.Tab.0.right/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379672" />
     <state width="1750" height="352" key="GridCell.Tab.1.bottom" timestamp="1588672437621">
@@ -140,17 +154,23 @@
       <screen x="0" y="23" width="1792" height="1043" />
     </state>
     <state width="1750" height="352" key="GridCell.Tab.1.right/0.23.1792.1043@0.23.1792.1043" timestamp="1588672437621" />
-    <state x="397" y="183" key="SettingsEditor" timestamp="1588421842922">
-      <screen x="0" y="23" width="1792" height="1043" />
+    <state x="628" y="332" key="SettingsEditor" timestamp="1588735582147">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="628" y="332" key="SettingsEditor/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588735582147" />
     <state x="397" y="183" key="SettingsEditor/0.23.1792.1043@0.23.1792.1043" timestamp="1588421842922" />
+    <state x="977" y="525" key="com.intellij.ide.util.TipDialog" timestamp="1588731336296">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="977" y="525" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588731336296" />
     <state x="551" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1588426253702">
       <screen x="0" y="23" width="1792" height="1043" />
     </state>
     <state x="551" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1792.1043@0.23.1792.1043" timestamp="1588426253702" />
-    <state x="554" y="301" width="683" height="486" key="find.popup" timestamp="1588675773888">
-      <screen x="0" y="23" width="1792" height="1043" />
+    <state x="791" y="373" width="976" height="653" key="find.popup" timestamp="1588732073470">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="791" y="373" width="976" height="653" key="find.popup/0.0.2560.1400/-1920.550.1920.1040@0.0.2560.1400" timestamp="1588732073470" />
     <state x="554" y="301" width="683" height="486" key="find.popup/0.23.1792.1043@0.23.1792.1043" timestamp="1588675773888" />
     <state x="545" y="267" width="700" height="530" key="recent.locations.popup" timestamp="1588473611476">
       <screen x="0" y="23" width="1792" height="1043" />
@@ -163,6 +183,6 @@
     <state x="561" y="254" width="670" height="676" key="search.everywhere.popup/0.23.1792.1043@0.23.1792.1043" timestamp="1588483632606" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/crawler$crawler.coverage" NAME="crawler Coverage Results" MODIFIED="1588730444906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/crawler$crawler.coverage" NAME="crawler Coverage Results" MODIFIED="1588741486041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
