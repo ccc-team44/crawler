@@ -81,7 +81,8 @@ class StreamListener(tweepy.StreamListener):
 		run = True
 		while run:
 			try:
-				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended").items()
+				# 900 / 180 * 20  = 100
+				tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended", exclude_replies=True).items(100)
 			except tweepy.RateLimitError as e:
 				print("RateLimitError", e)
 				time.sleep( 60 )

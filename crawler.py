@@ -35,6 +35,7 @@ def start_streaming():
 			print('streaming Stopping')
 			run = True
 
+
 def init():
 	db_user = os.environ['DATABASE_USER']
 	db_password = os.environ['DATABASE_PASSWORD']
@@ -55,7 +56,7 @@ def init():
 	while keep_trying:
 		try:
 			limit = StreamListener.api.rate_limit_status()
-			print(limit)
+			print("timeline",limit["resources"]["statuses"]["/statuses/user_timeline"])
 			keep_trying = False
 		except Exception as e:
 			print(e)
@@ -70,21 +71,9 @@ def init():
 		sys.exit(0)
 	start_streaming()
 
+
 def main():
-	processes = []
-	
-	# only 2 cores
-	for i in range(2):
-		processes.append(Process(target=init))
-	
-	for i in range(2):
-		processes[i].start()
-		# sleep 5s so they start off with different tweets
-		time.sleep(5)
-	
-	for i in range(2):
-		processes[i].join()
-		
+	init()
 	print("the end")
 
 
