@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="81d6ae4c-6b5e-46cb-beb9-c9775264f36c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/crawler.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1bLLbCF4jHcP6BGBkwQ6wttmzR1" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs.protractor.protractor_package" value="" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="81d6ae4c-6b5e-46cb-beb9-c9775264f36c" name="Default Changelist" comment="" />
+      <created>1588406495094</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588406495094</updated>
+      <workItem from="1588406496434" duration="1854000" />
+      <workItem from="1588410194804" duration="1144000" />
+      <workItem from="1588413766846" duration="1081000" />
+      <workItem from="1588421662623" duration="11888000" />
+      <workItem from="1588470472693" duration="12278000" />
+      <workItem from="1588489936945" duration="875000" />
+      <workItem from="1588491725927" duration="2610000" />
+      <workItem from="1588495335113" duration="560000" />
+      <workItem from="1588495999352" duration="798000" />
+      <workItem from="1588498177240" duration="518000" />
+      <workItem from="1588663466543" duration="8579000" />
+      <workItem from="1588726209293" duration="3485000" />
+      <workItem from="1588730330363" duration="738000" />
+      <workItem from="1588731141066" duration="90000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="242" y="101" width="1071" height="711" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588731230716">
+      <screen x="0" y="23" width="1792" height="1041" />
+    </state>
+    <state x="242" y="101" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1041@0.23.1792.1041" timestamp="1588731230716" />
+    <state x="242" y="101" width="1071" height="711" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1043@0.23.1792.1043" timestamp="1588672419381" />
+    <state x="597" y="354" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588422515001">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="597" y="354" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1792.1043@0.23.1792.1043" timestamp="1588422515001" />
+    <state x="479" y="147" key="CommitChangelistDialog2" timestamp="1588672225426">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="479" y="147" key="CommitChangelistDialog2/0.23.1792.1043@0.23.1792.1043" timestamp="1588672225426" />
+    <state x="100" y="123" width="1592" height="843" key="DiffContextDialog" timestamp="1588491919663">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="100" y="123" width="1592" height="843" key="DiffContextDialog/0.23.1792.1043@0.23.1792.1043" timestamp="1588491919663" />
+    <state x="650" y="333" key="EnvironmentVariablesDialog" timestamp="1588427471712">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="650" y="333" key="EnvironmentVariablesDialog/0.23.1792.1043@0.23.1792.1043" timestamp="1588427471712" />
+    <state width="1750" height="284" key="GridCell.Tab.0.bottom" timestamp="1588731068415">
+      <screen x="0" y="23" width="1792" height="1041" />
+    </state>
+    <state width="1750" height="284" key="GridCell.Tab.0.bottom/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068415" />
+    <state width="1750" height="285" key="GridCell.Tab.0.bottom/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379672" />
+    <state width="1750" height="284" key="GridCell.Tab.0.center" timestamp="1588731068414">
+      <screen x="0" y="23" width="1792" height="1041" />
+    </state>
+    <state width="1750" height="284" key="GridCell.Tab.0.center/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068414" />
+    <state width="1750" height="285" key="GridCell.Tab.0.center/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379672" />
+    <state width="1750" height="284" key="GridCell.Tab.0.left" timestamp="1588731068414">
+      <screen x="0" y="23" width="1792" height="1041" />
+    </state>
+    <state width="1750" height="284" key="GridCell.Tab.0.left/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068414" />
+    <state width="1750" height="285" key="GridCell.Tab.0.left/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379671" />
+    <state width="1750" height="284" key="GridCell.Tab.0.right" timestamp="1588731068415">
+      <screen x="0" y="23" width="1792" height="1041" />
+    </state>
+    <state width="1750" height="284" key="GridCell.Tab.0.right/0.23.1792.1041@0.23.1792.1041" timestamp="1588731068415" />
+    <state width="1750" height="285" key="GridCell.Tab.0.right/0.23.1792.1043@0.23.1792.1043" timestamp="1588677379672" />
+    <state width="1750" height="352" key="GridCell.Tab.1.bottom" timestamp="1588672437621">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state width="1750" height="352" key="GridCell.Tab.1.bottom/0.23.1792.1043@0.23.1792.1043" timestamp="1588672437621" />
+    <state width="1750" height="352" key="GridCell.Tab.1.center" timestamp="1588672437621">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state width="1750" height="352" key="GridCell.Tab.1.center/0.23.1792.1043@0.23.1792.1043" timestamp="1588672437621" />
+    <state width="1750" height="352" key="GridCell.Tab.1.left" timestamp="1588672437621">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state width="1750" height="352" key="GridCell.Tab.1.left/0.23.1792.1043@0.23.1792.1043" timestamp="1588672437621" />
+    <state width="1750" height="352" key="GridCell.Tab.1.right" timestamp="1588672437621">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state width="1750" height="352" key="GridCell.Tab.1.right/0.23.1792.1043@0.23.1792.1043" timestamp="1588672437621" />
+    <state x="397" y="183" key="SettingsEditor" timestamp="1588421842922">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="397" y="183" key="SettingsEditor/0.23.1792.1043@0.23.1792.1043" timestamp="1588421842922" />
+    <state x="551" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1588426253702">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="551" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1792.1043@0.23.1792.1043" timestamp="1588426253702" />
+    <state x="554" y="301" width="683" height="486" key="find.popup" timestamp="1588675773888">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="554" y="301" width="683" height="486" key="find.popup/0.23.1792.1043@0.23.1792.1043" timestamp="1588675773888" />
+    <state x="545" y="267" width="700" height="530" key="recent.locations.popup" timestamp="1588473611476">
+      <screen x="0" y="23" width="1792" height="1043" />
+    </state>
+    <state x="545" y="267" width="700" height="530" key="recent.locations.popup/0.23.1792.1043@0.23.1792.1043" timestamp="1588473611476" />
+    <state x="561" y="254" width="670" height="675" key="search.everywhere.popup" timestamp="1588731195345">
+      <screen x="0" y="23" width="1792" height="1041" />
+    </state>
+    <state x="561" y="254" width="670" height="675" key="search.everywhere.popup/0.23.1792.1041@0.23.1792.1041" timestamp="1588731195345" />
+    <state x="561" y="254" width="670" height="676" key="search.everywhere.popup/0.23.1792.1043@0.23.1792.1043" timestamp="1588483632606" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/crawler$crawler.coverage" NAME="crawler Coverage Results" MODIFIED="1588730444906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
