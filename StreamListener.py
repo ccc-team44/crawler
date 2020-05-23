@@ -1,11 +1,8 @@
 import json
 import time
-
 import tweepy
-
 import config
 
-r = 0
 
 
 class StreamListener(tweepy.StreamListener):
@@ -22,14 +19,14 @@ class StreamListener(tweepy.StreamListener):
         db_data = {**obj, "text": text, "_id": id_str}
         return db_data
 
-    # check tweet has coord
+    # get coord from tweet
     def get_coords(self, obj):
         coords = None
         try:
             coords = obj["geo"]["coordinates"]
         except Exception:
             try:
-                coords_raw = obj["coordinates"]
+                coords_raw = obj["coordinates"]["coordinates"]
                 if isinstance(coords_raw, list):
                     coords = coords_raw
             except Exception:
@@ -37,7 +34,7 @@ class StreamListener(tweepy.StreamListener):
         return coords
 
     # once complete grabbing tweets from an user, mark user as done
-    def should_skip_user(self, user_id):
+    def user_exists(self, user_id):
         couch = StreamListener.couch
         db = couch.get_database(name="users")
 
@@ -45,10 +42,10 @@ class StreamListener(tweepy.StreamListener):
             db.get(user_id)
         except:
             self.couch.saveUser({"_id": user_id})
-            # saved and will dig this user
+            # start digging this user, save in db so next time we know to skip himm
             return False
         else:
-            # user in db , skip dig
+            # user in db , means we have digged before
             return True
 
     def get_place_coord(self, points):
@@ -90,6 +87,8 @@ class StreamListener(tweepy.StreamListener):
     def get_user_tweets(self, user_id):
         try:
             # 900 / 180 * 20  = 100
+            # quota for user timeline is 900 every 15min
+            # to use it fully, we can dig 100 user tweets
             tweets = tweepy.Cursor(StreamListener.api.user_timeline, user_id=user_id, tweet_mode="extended",
                                    exclude_replies=True).items(100)
         except tweepy.RateLimitError as e:
@@ -100,15 +99,10 @@ class StreamListener(tweepy.StreamListener):
         else:
             pass
 
-        count = 0
         for tweet in tweets:
-            count += 1
             tweet_json = tweet._json
-            if tweet_json is None:
-                print("This tweet is empty")
-            else:
+            if tweet_json is not None:
                 self.handle_tweet(tweet_json)
-        print(count)
 
     # When a streaming data comes in
     def on_data(self, raw_data):
@@ -116,10 +110,11 @@ class StreamListener(tweepy.StreamListener):
         has_coord = self.handle_tweet(json_dict)
         if has_coord :
             user_id = json_dict["user"]["id_str"]
-            if not self.should_skip_user(user_id):
+            if not self.user_exists(user_id):
                 print("start digging user tweet", user_id)
                 self.get_user_tweets(user_id)
 
     # Error code
-    def on_error(self, status_code):
+    @staticmethod
+    def on_error(status_code):
         print(status_code)

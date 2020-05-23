@@ -18,20 +18,14 @@ def start_streaming():
 	"""
 	listener = StreamListener()
 	stream = Stream(listener.auth, listener)
-	run = True
-	while run:
+	while True:
 		try:
 			stream.filter(locations=config.au_bounds)
 		except tweepy.RateLimitError as e:
 			print("stream RateLimitError error", e)
-			time.sleep(15 * 60)
-			run = True
+			time.sleep(15 * 60) # anti block
 		except Exception as e:
 			print("non rate related", e)
-			run = True
-		else:
-			print('streaming Stopping')
-			run = True
 
 
 def init():
@@ -58,7 +52,7 @@ def init():
 			keep_trying = False
 		except Exception as e:
 			print(e)
-			time.sleep(15)
+			time.sleep(15) # just in case twitter blocks our account
 	try:
 		couch_server = pycouchdb.Server(server_address, authmethod="basic")
 		couch = Couch()
